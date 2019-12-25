@@ -86,6 +86,12 @@
 		<Unit filename="D:/ITM/System-software-SICXE-assembler/source/OP_Table.h">
 			<Option target="source"/>
 		</Unit>
+		<Unit filename="D:/ITM/System-software-SICXE-assembler/source/PassOne.cpp">
+			<Option target="source"/>
+		</Unit>
+		<Unit filename="D:/ITM/System-software-SICXE-assembler/source/PassOne.h">
+			<Option target="source"/>
+		</Unit>
 		<Unit filename="D:/ITM/System-software-SICXE-assembler/source/main.cpp">
 			<Option target="source"/>
 		</Unit>

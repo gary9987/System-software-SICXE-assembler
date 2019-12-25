@@ -71,3 +71,13 @@ OP_Table::OP_Table() {
 const OP_Info &OP_Table::operator[](const std::string &mnemonic) {
     return *_table[mnemonic];
 }
+
+bool OP_Table::find(const std::string &target){
+    return _table.count(target) == 1 ? true : false;
+}
+
+OP_Table::~OP_Table() {
+    for(auto &i:_table){
+        delete(i.second);
+    }
+}

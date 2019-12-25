@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "D:/ITM/System-software-SICXE-assembler/source/OP_Table.cpp" "D:/ITM/System-software-SICXE-assembler/source/cmake-build-debug/CMakeFiles/source.dir/OP_Table.cpp.obj"
+  "D:/ITM/System-software-SICXE-assembler/source/PassOne.cpp" "D:/ITM/System-software-SICXE-assembler/source/cmake-build-debug/CMakeFiles/source.dir/PassOne.cpp.obj"
   "D:/ITM/System-software-SICXE-assembler/source/main.cpp" "D:/ITM/System-software-SICXE-assembler/source/cmake-build-debug/CMakeFiles/source.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

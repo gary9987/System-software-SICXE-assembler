@@ -1,9 +1,10 @@
 #include <iostream>
-#include "OP_Table.h"
+#include "PassOne.h"
 using namespace std;
 
 int main() {
-    OP_Table ta;
 
+    PassOne ps1("..\\..\\test_sic_code\\sic_code.txt");
+    ps1.perform();
     return 0;
 }

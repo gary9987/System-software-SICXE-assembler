@@ -149,6 +149,33 @@ OP_Table.cpp.s:
 	$(MAKE) -f CMakeFiles\source.dir\build.make CMakeFiles/source.dir/OP_Table.cpp.s
 .PHONY : OP_Table.cpp.s
 
+PassOne.obj: PassOne.cpp.obj
+
+.PHONY : PassOne.obj
+
+# target to build an object file
+PassOne.cpp.obj:
+	$(MAKE) -f CMakeFiles\source.dir\build.make CMakeFiles/source.dir/PassOne.cpp.obj
+.PHONY : PassOne.cpp.obj
+
+PassOne.i: PassOne.cpp.i
+
+.PHONY : PassOne.i
+
+# target to preprocess a source file
+PassOne.cpp.i:
+	$(MAKE) -f CMakeFiles\source.dir\build.make CMakeFiles/source.dir/PassOne.cpp.i
+.PHONY : PassOne.cpp.i
+
+PassOne.s: PassOne.cpp.s
+
+.PHONY : PassOne.s
+
+# target to generate assembly for a file
+PassOne.cpp.s:
+	$(MAKE) -f CMakeFiles\source.dir\build.make CMakeFiles/source.dir/PassOne.cpp.s
+.PHONY : PassOne.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -188,6 +215,9 @@ help:
 	@echo ... OP_Table.obj
 	@echo ... OP_Table.i
 	@echo ... OP_Table.s
+	@echo ... PassOne.obj
+	@echo ... PassOne.i
+	@echo ... PassOne.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

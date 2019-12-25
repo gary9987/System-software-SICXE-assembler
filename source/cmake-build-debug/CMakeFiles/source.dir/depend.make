@@ -4,6 +4,10 @@
 CMakeFiles/source.dir/OP_Table.cpp.obj: ../OP_Table.cpp
 CMakeFiles/source.dir/OP_Table.cpp.obj: ../OP_Table.h
 
-CMakeFiles/source.dir/main.cpp.obj: ../OP_Table.h
+CMakeFiles/source.dir/PassOne.cpp.obj: ../OP_Table.h
+CMakeFiles/source.dir/PassOne.cpp.obj: ../PassOne.cpp
+CMakeFiles/source.dir/PassOne.cpp.obj: ../PassOne.h
+
+CMakeFiles/source.dir/main.cpp.obj: ../PassOne.h
 CMakeFiles/source.dir/main.cpp.obj: ../main.cpp
 
