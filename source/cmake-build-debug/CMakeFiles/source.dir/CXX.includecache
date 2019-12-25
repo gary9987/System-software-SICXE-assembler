@@ -6,7 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/Users/garys/Desktop/ITM/System software SICXE assembler/source/main.cpp
-iostream
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.cpp
+OP_Table.h
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.h
+
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.h
+string
+-
+map
 -
 

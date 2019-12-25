@@ -123,6 +123,33 @@ source/fast:
 	$(MAKE) -f CMakeFiles/source.dir/build.make CMakeFiles/source.dir/build
 .PHONY : source/fast
 
+OP_Table.o: OP_Table.cpp.o
+
+.PHONY : OP_Table.o
+
+# target to build an object file
+OP_Table.cpp.o:
+	$(MAKE) -f CMakeFiles/source.dir/build.make CMakeFiles/source.dir/OP_Table.cpp.o
+.PHONY : OP_Table.cpp.o
+
+OP_Table.i: OP_Table.cpp.i
+
+.PHONY : OP_Table.i
+
+# target to preprocess a source file
+OP_Table.cpp.i:
+	$(MAKE) -f CMakeFiles/source.dir/build.make CMakeFiles/source.dir/OP_Table.cpp.i
+.PHONY : OP_Table.cpp.i
+
+OP_Table.s: OP_Table.cpp.s
+
+.PHONY : OP_Table.s
+
+# target to generate assembly for a file
+OP_Table.cpp.s:
+	$(MAKE) -f CMakeFiles/source.dir/build.make CMakeFiles/source.dir/OP_Table.cpp.s
+.PHONY : OP_Table.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... source"
+	@echo "... OP_Table.o"
+	@echo "... OP_Table.i"
+	@echo "... OP_Table.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

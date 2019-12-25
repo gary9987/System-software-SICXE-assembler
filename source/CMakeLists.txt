@@ -3,4 +3,4 @@ project(source)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(source main.cpp)
+add_executable(source main.cpp OP_Table.cpp OP_Table.h)

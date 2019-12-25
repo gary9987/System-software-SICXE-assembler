@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.cpp">
+			<Option target="source"/>
+		</Unit>
+		<Unit filename="/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.h">
+			<Option target="source"/>
+		</Unit>
 		<Unit filename="/Users/garys/Desktop/ITM/System software SICXE assembler/source/main.cpp">
 			<Option target="source"/>
 		</Unit>
