@@ -6,11 +6,15 @@
 #include "OP_Table.h"
 #include <string>
 #include <sstream>
+#include <iomanip>
+#include <cstdlib>
 
 using namespace std;
 
-PassOne::PassOne(const std::string& url){
-    _infile.open(url);
+PassOne::PassOne(const std::string& in_url, const std::string& out_url){
+    _infile.open(in_url);
+    _outfile.open(out_url);
+
     if(!_infile){
         cerr<<"Open file failure\n";
     }
@@ -21,10 +25,81 @@ PassOne::PassOne(const std::string& url){
 
 void PassOne::perform() {
     string read;
+
+    // Read first line
+    getline(_infile, read);
+    cout<<"now read line : "<<read<<endl;
+    _parseLine(read);
+
+    if(_opcode == "START"){
+        // Save starting address
+        stringstream tmp(_operand1);
+        tmp>>_LOCCTR;
+
+        _outfile<<setw(4)<<setfill('0')<<_LOCCTR<<"    "<<read<<endl;
+    }
+
     while(getline(_infile, read)){
+
+        int CP_LOCCTR = _LOCCTR;
+        int output_type = 0;
+
+        clear();
+
         cout<<"now read line : "<<read<<endl;
         _parseLine(read);
+
+        if(_opcode == "END"){
+            _outfile<<"           "<<read<<endl;
+            break;
+        }
+
+        // Append symbol to symbol table
+        if(_symbol != ""){
+            if(_symbolTable.count(_symbol) == 0){
+                _symbolTable[_symbol] = _LOCCTR;
+            }
+            else{
+                cerr << "ERROR! " <<_symbol<< " has already declared.\n";
+            }
+        }
+
+        // Find OP code
+        OP_Table opTable;
+        if(opTable.find(_opcode)){
+            _LOCCTR += _op_length;
+        }
+        else if(_opcode == "WORD"){
+            _LOCCTR += 3;
+        }
+        else if(_opcode == "RESW"){
+            _LOCCTR += 3 * strtol(_operand1.c_str(), NULL, 10);
+        }
+        else if(_opcode == "RESB"){
+            _LOCCTR += strtol(_operand1.c_str(), NULL, 10);;
+        }
+        else if(_opcode == "BYTE"){
+            _LOCCTR += _byte_length(_operand1);
+        }
+        else if(_opcode == "BASE"){
+            _LOCCTR += 3;
+            output_type = 1;
+        }
+        else{
+            cerr<<"Undefined op code\n";
+            return;
+        }
+
+        if(output_type){
+            _outfile<<"        "<<read<<endl;
+        }
+        else{
+            _append_to_outfile(CP_LOCCTR, read);
+        }
     }
+
+
+
 
 
 }
@@ -110,4 +185,34 @@ int PassOne::_getFormat(const std::string &code) {
         re = -0;
     }
     return re;
+}
+
+void PassOne::clear() {
+    _symbol = "";
+    _origin_opcode = "";
+    _opcode = "";
+    _origin_operand = "";
+    _operand1 = "";
+    _operand2 = "";
+
+    _flag_extended = false;
+    _op_length = 0, _operand_count = 0;
+}
+
+int PassOne::_byte_length(const std::string &operand) const {
+    if(operand[0] == 'X'){
+        return 1;
+    }
+    else{
+        int idx = 1, len = 0;
+        for(; idx < operand.length(); idx++, len++) {
+            if (operand[idx] == '\'') {
+                return len;
+            }
+        }
+    }
+}
+
+void PassOne::_append_to_outfile(int loc, const std::string &in) {
+    _outfile<<setw(4)<<setfill('0')<<hex<<loc<<"    "<<in<<endl;
 }

@@ -6,25 +6,15 @@
 
 #IncludeRegexTransform: 
 
-D:/ITM/System-software-SICXE-assembler/source/OP_Table.h
-string
--
-map
--
-
-D:/ITM/System-software-SICXE-assembler/source/PassOne.cpp
-PassOne.h
-D:/ITM/System-software-SICXE-assembler/source/PassOne.h
-OP_Table.h
-D:/ITM/System-software-SICXE-assembler/source/OP_Table.h
-string
--
-sstream
--
-
 D:/ITM/System-software-SICXE-assembler/source/PassOne.h
 iostream
 -
 fstream
 -
+map
+-
+
+D:/ITM/System-software-SICXE-assembler/source/main.cpp
+PassOne.h
+D:/ITM/System-software-SICXE-assembler/source/PassOne.h
 
