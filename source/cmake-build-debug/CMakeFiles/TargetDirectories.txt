@@ -1,3 +1,3 @@
-/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/source.dir
+D:/ITM/System-software-SICXE-assembler/source/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/ITM/System-software-SICXE-assembler/source/cmake-build-debug/CMakeFiles/source.dir
+D:/ITM/System-software-SICXE-assembler/source/cmake-build-debug/CMakeFiles/rebuild_cache.dir

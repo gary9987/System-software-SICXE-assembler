@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/source.dir/OP_Table.cpp.o"
-  "CMakeFiles/source.dir/main.cpp.o"
-  "source"
+  "CMakeFiles/source.dir/OP_Table.cpp.obj"
+  "CMakeFiles/source.dir/main.cpp.obj"
+  "libsource.dll.a"
+  "source.exe"
+  "source.exe.manifest"
   "source.pdb"
 )
 

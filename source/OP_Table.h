@@ -10,21 +10,20 @@
 #include <map>
 
 class OP_Info{
+public:
+    OP_Info(int opcode, int formate);
+
     int opcode;
     int formate;
 
-public:
-    OP_Info(int opcode, int formate);
 };
 
 class OP_Table{
 public:
-    static OP_Table* getInstance();
-    std::map<std::string, OP_Info> table;
-
+    OP_Table();
+    const OP_Info& operator[] (const std::string& mnemonic);
 private:
-    static OP_Table *myself;
-
+    std::map<std::string, OP_Info*> _table;
 };
 
 

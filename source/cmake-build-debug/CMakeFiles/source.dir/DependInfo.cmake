@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.cpp" "/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/source.dir/OP_Table.cpp.o"
-  "/Users/garys/Desktop/ITM/System software SICXE assembler/source/main.cpp" "/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/source.dir/main.cpp.o"
+  "D:/ITM/System-software-SICXE-assembler/source/OP_Table.cpp" "D:/ITM/System-software-SICXE-assembler/source/cmake-build-debug/CMakeFiles/source.dir/OP_Table.cpp.obj"
+  "D:/ITM/System-software-SICXE-assembler/source/main.cpp" "D:/ITM/System-software-SICXE-assembler/source/cmake-build-debug/CMakeFiles/source.dir/main.cpp.obj"
   )
-set(CMAKE_CXX_COMPILER_ID "AppleClang")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
