@@ -61,9 +61,10 @@ void PassOne::perform() {
         }
 
         // Append symbol to symbol table
-        if(_symbol != ""){
+        if(!_symbol.empty()){
             if(_shared_symbolTable.count(_symbol) == 0){
                 _shared_symbolTable[_symbol] = _LOCCTR;
+                cout<<"Add symbol "<<_symbol<<endl;
             }
             else{
                 cerr << "ERROR! " <<_symbol<< " has already declared.\n";
@@ -134,6 +135,13 @@ void PassOne::_parseLine(const std::string &line) {
     // Get OPCODE
     _origin_opcode = sub_line[ 0 + offset_idx];
     _op_length = _getFormat(_origin_opcode);
+    // Remove prfix '+'
+    if(_origin_opcode[0] == '+'){
+        _opcode.assign(_origin_opcode, 1, _origin_opcode.length()-1);
+    }
+    else{
+        _opcode = _origin_opcode;
+    }
 
     // Get OPERAND
     if(sub_line.size() >= 2){
@@ -166,44 +174,42 @@ void PassOne::_parseLine(const std::string &line) {
 int PassOne::_getFormat(const std::string &code) {
 
     int re = 0;
-
+    string cp_code(code);
     // If OPCODE prefix is '+', then it is extended format
-    if(code[0] == '+'){
+    if(cp_code[0] == '+'){
         _flag_extended = true;
-        _opcode.assign(_origin_opcode, 1, _origin_opcode.length()-1);
+        cp_code.assign(cp_code, 1, cp_code.length()-1);
     }
-    else{
-        _opcode = _origin_opcode;
-    }
+
 
     OP_Table table;
-    if(table.find(_opcode)){
-        if(table[_opcode].formate == 3){
+    if(table.find(cp_code)){
+        if(table[cp_code].formate == 3){
             re = _flag_extended ? 4 : 3;
         }
         else{
-            re = table[_opcode].formate;
+            re = table[cp_code].formate;
         }
     }
-    else if(_opcode == "BYTE"){
+    else if(cp_code == "BYTE"){
         re = 5;
     }
-    else if(_opcode == "WORD"){
+    else if(cp_code == "WORD"){
         re = 6;
     }
-    else if(_opcode == "RESB"){
+    else if(cp_code == "RESB"){
         re = 0;
     }
-    else if(_opcode == "RESW"){
+    else if(cp_code == "RESW"){
         re = 0;
     }
-    else if(_opcode == "BASE"){
+    else if(cp_code == "BASE"){
         re = 7;
     }
-    else if(_opcode == "START"){
+    else if(cp_code == "START"){
         re = 0;
     }
-    else if(_opcode == "END"){
+    else if(cp_code == "END"){
         re = 0;
     }
     return re;

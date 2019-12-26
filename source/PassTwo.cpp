@@ -28,20 +28,36 @@ void PassTwo::perform() {
 
     // Generate text record first line
     _out_txrecord << "H" << setw(6) << left << _symbol << right << setw(6) << setfill('0') << hex << _LOCCTR << setw(6) << shared_program_length << endl;
+    _outfile<<read<<endl;
 
     while (getline(_infile, read)){
         cout<<"now read line : "<<read<<endl;
         _parseLine(read);
 
         if(_opcode != "END"){
-
+            if(_generate_object_code()){
+                _write_to_txrecord();
+                _outfile<<setw(30)<<left<<read<<setw(8)<<left<<_obj_code<<endl;
+            }
+            else{
+                _outfile<<read<<endl;
+            }
         }
         else{
             _write_to_txrecord();
             break;
         }
-
     }
+
+    // Write format4 vec
+    for(auto i : _format4_vec){
+        _out_txrecord<<"M"<<setfill('0')<<setw(6)<<hex<<i<<"05"<<endl;
+    }
+    _out_txrecord<<"E000000";
+
+    _infile.close();
+    _outfile.close();
+    _out_txrecord.close();
 
 }
 
@@ -76,11 +92,18 @@ void PassTwo::_parseLine(const std::string &line) {
     // Get OPCODE
     _origin_opcode = sub_line[offset_idx];
     _op_length = _getFormat(_origin_opcode);
+    // Remove prfix '+'
+    if(_origin_opcode[0] == '+'){
+        _opcode.assign(_origin_opcode, 1, _origin_opcode.length()-1);
+    }
+    else{
+        _opcode = _origin_opcode;
+    }
     offset_idx++;
 
     // If have OPERAND, get OPERAND
     if(offset_idx < sub_line.size()){
-        _origin_operand = sub_line[1 + offset_idx];
+        _origin_operand = sub_line[offset_idx];
     }
 
 
@@ -146,16 +169,33 @@ void PassTwo::clear() {
 }
 
 
-void PassTwo::_generate_object_code() {
+bool PassTwo::_generate_object_code() {
     int n, i, x, b, p, e;
     int displcement = 0, BASE = 0;
 
     int format = _getFormat(_opcode);
-    int opcode_value = shared_table[_opcode].opcode;
+
+    int opcode_value = 0;
+
     if(format == 1){
+        if(!shared_table.find(_opcode)){
+            cerr<<"Error, OPCODE not found,\n";
+            return false;
+        }
+        else{
+            opcode_value = shared_table[_opcode].opcode;
+        }
         _obj_code = to_object_str(opcode_value, format);
+        return true;
     }
-    else if(format == 2){
+    if(format == 2){
+        if(!shared_table.find(_opcode)){
+            cerr<<"Error, OPCODE not found,\n";
+            return false;
+        }
+        else{
+            opcode_value = shared_table[_opcode].opcode;
+        }
         // Shift left 8 bits
         opcode_value <<= 8;
 
@@ -169,8 +209,16 @@ void PassTwo::_generate_object_code() {
         }
 
         _obj_code = to_object_str(opcode_value, format);
+        return true;
     }
-    else if(format == 3){
+    if(format == 3){
+        if(!shared_table.find(_opcode)){
+            cerr<<"Error, OPCODE not found,\n";
+            return false;
+        }
+        else{
+            opcode_value = shared_table[_opcode].opcode;
+        }
         // Immediate addressing
         if(_operand1[0] == '#'){
             n = 0;
@@ -224,8 +272,97 @@ void PassTwo::_generate_object_code() {
         opcode_value <<=  16;
         opcode_value += ((n << 17) + (i << 16) + (x << 15) + (b << 14) + (p << 13) + (e << 12));
         opcode_value |= (displcement & 0x00000FFF) ;
-        to_object_str(opcode_value, format);
+        _obj_code = to_object_str(opcode_value, format);
+        return true;
     }
+    if(format == 4){
+        if(!shared_table.find(_opcode)){
+            cerr<<"Error, OPCODE not found,\n";
+            return false;
+        }
+        else{
+            opcode_value = shared_table[_opcode].opcode;
+        }
+        // Immediate addressing
+        if(_operand1[0] == '#'){
+            n = 0;
+            i = 1;
+        }
+            //Indirect addressing
+        else if(_operand1[0] == '@'){
+            n = 1;
+            i = 0;
+        }
+        else{
+            i = 1;
+            n = 1;
+        }
+
+        // Calculate displacement
+        if(_operand1[0] == '#' && isdigit(_operand1[1])){
+            displcement = strtol(_operand1.c_str() + 1, NULL, 10);
+            b = 0;
+            p = 0;
+        }
+        else{
+            // Direct addressing
+            string cp_operand1 = _operand1;
+            if((_operand1[0] == '@') || (_operand1[0] == '#')){
+                cp_operand1.assign(cp_operand1, 1, cp_operand1.length()-1);
+            }
+
+            displcement = _shared_symbolTable[cp_operand1];
+            _format4_vec.push_back(_LOCCTR);
+            b = 0;
+            p = 0;
+
+        }
+        // Is index address
+        if( !_operand2.empty() && _operand2[0] == 'X'){
+            x = 1;
+        }
+        else{
+            x = 0;
+        }
+        e = 1;
+
+        opcode_value <<=  24;
+        opcode_value += ((n << 25) + (i << 24) + (x << 23) + (b << 22) + (p << 21) + (e << 20));
+        opcode_value += displcement;
+        _obj_code = to_object_str(opcode_value, format);
+        return true;
+    }
+    if(_opcode == "BYTE"){
+        int s_length = 1;
+        if(_operand1[0] == 'C'){
+            opcode_value = (int)_operand1[2];
+            for(int j = 3; _operand1[j] != '\''; j++, s_length++){
+                opcode_value = (int)_operand1[j] + (opcode_value << 8);
+            }
+        }
+        else{
+            string tmp;
+            tmp.assign(_operand1, 2, 2);
+            opcode_value = strtol(tmp.c_str(), NULL, 16);
+        }
+        _obj_code = to_object_str(opcode_value, format, s_length);
+        return true;
+
+    }
+    // skip "WORD"
+    // OPCODE == "BASE"
+    if(format == 7){
+
+        BASE = _shared_symbolTable[_operand1];
+        return false;
+    }
+
+    if(format == 0){
+        return false;
+    }
+    cerr<<"Error, in _generate_object_code\n";
+    return false;
+
 
 
 }
