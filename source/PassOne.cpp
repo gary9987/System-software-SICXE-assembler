@@ -8,6 +8,7 @@
 #include <sstream>
 #include <iomanip>
 #include <cstdlib>
+#include <vector>
 
 using namespace std;
 
@@ -108,19 +109,33 @@ void PassOne::perform() {
 
 void PassOne::_parseLine(const std::string &line) {
     string cp_line(line);
+    string temp;
     stringstream streamline(cp_line);
 
-    // Check is Symbol
-    if(cp_line[0] != '\t'){
-        streamline >> _symbol;
+    vector<string> sub_line;
+    // CLOOP +JSUB RDREC
+    while (streamline >> temp){
+        sub_line.push_back(temp);
+    }
+
+    int offset_idx = 0;
+
+    // Get Symbol
+    if(sub_line.size() == 3){
+        _symbol = sub_line[0];
+        offset_idx = 1;
     }
 
     // Get OPCODE
-    streamline >> _origin_opcode;
+    _origin_opcode = sub_line[ 0 + offset_idx];
     _op_length = _getFormat(_origin_opcode);
 
     // Get OPERAND
-    streamline >> _origin_operand;
+    if(sub_line.size() >= 2){
+        _origin_operand = sub_line[1 + offset_idx];
+    }
+
+
     if(_origin_operand != ""){
 
         int idx = 0;

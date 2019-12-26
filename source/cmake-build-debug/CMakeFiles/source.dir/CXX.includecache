@@ -25,6 +25,8 @@ iomanip
 -
 cstdlib
 -
+vector
+-
 
 /Users/garys/Desktop/ITM/System software SICXE assembler/source/PassOne.h
 iostream
