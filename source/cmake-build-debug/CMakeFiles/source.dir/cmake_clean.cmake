@@ -1,10 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/source.dir/OP_Table.cpp.obj"
-  "CMakeFiles/source.dir/PassOne.cpp.obj"
-  "CMakeFiles/source.dir/main.cpp.obj"
-  "libsource.dll.a"
-  "source.exe"
-  "source.exe.manifest"
+  "CMakeFiles/source.dir/OP_Table.cpp.o"
+  "CMakeFiles/source.dir/PassOne.cpp.o"
+  "CMakeFiles/source.dir/main.cpp.o"
+  "source"
   "source.pdb"
 )
 

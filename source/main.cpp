@@ -2,8 +2,17 @@
 #include "PassOne.h"
 using namespace std;
 
+
 int main() {
-    PassOne ps1("..\\..\\test_sic_code\\sic_code.txt", "output.txt");
+    string in_file_url, out_file_url;
+#if defined(_WIN64) || defined(_WIN32)
+    in_file_url = "..\\..\\test_sic_code\\sic_code.txt"";
+    out_file_url = "output.txt";
+#else
+    in_file_url = "../../test_sic_code/sic_code.txt";
+    out_file_url = "output.txt";
+#endif
+    PassOne ps1(in_file_url, out_file_url);
     ps1.perform();
     return 0;
 }

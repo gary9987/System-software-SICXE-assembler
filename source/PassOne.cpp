@@ -90,18 +90,20 @@ void PassOne::perform() {
             return;
         }
 
+        // Output type 1
         if(output_type){
             _outfile<<"        "<<read<<endl;
         }
+        // Output type 0
         else{
             _append_to_outfile(CP_LOCCTR, read);
         }
     }
 
 
-
-
-
+    // End Pass One
+    _outfile.close();
+    _infile.close();
 }
 
 void PassOne::_parseLine(const std::string &line) {
@@ -182,7 +184,7 @@ int PassOne::_getFormat(const std::string &code) {
         re = 0;
     }
     else if(_opcode == "END"){
-        re = -0;
+        re = 0;
     }
     return re;
 }
@@ -211,6 +213,10 @@ int PassOne::_byte_length(const std::string &operand) const {
             }
         }
     }
+
+    // Parse operand error
+    cerr<<"Error, perform _byte_length, input is "<<operand<<endl;
+    return 0;
 }
 
 void PassOne::_append_to_outfile(int loc, const std::string &in) {
