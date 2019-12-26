@@ -3,7 +3,11 @@
 //
 
 #include "OP_Table.h"
+#include <sstream>
+#include <iomanip>
+#include <iostream>
 
+using namespace std;
 OP_Info::OP_Info(int opcode, int formate) : opcode(opcode), formate(formate) {}
 
 OP_Table::OP_Table() {

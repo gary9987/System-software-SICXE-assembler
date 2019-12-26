@@ -13,7 +13,8 @@ class PassOne {
 public:
     PassOne(const std::string& in_url, const std::string& out_url);
     virtual void perform();
-    void clear();
+
+    virtual void clear();
 
 protected:
     std::ifstream _infile;
@@ -25,7 +26,7 @@ protected:
     std::string _origin_operand;
     std::string _operand1;
     std::string _operand2;
-    std::map<std::string, int> _symbolTable;
+    static std::map<std::string, int> _shared_symbolTable;
 
     static int shared_program_length;
 

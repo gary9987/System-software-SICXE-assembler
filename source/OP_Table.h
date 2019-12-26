@@ -12,7 +12,6 @@
 class OP_Info{
 public:
     OP_Info(int opcode, int formate);
-
     int opcode;
     int formate;
 
@@ -23,6 +22,7 @@ public:
     OP_Table();
 
     virtual ~OP_Table();
+
 
     bool find(const std::string& target);
     const OP_Info& operator[] (const std::string& mnemonic);

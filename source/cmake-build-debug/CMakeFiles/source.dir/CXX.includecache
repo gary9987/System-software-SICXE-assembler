@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.h
+string
+-
+map
+-
+
 /Users/garys/Desktop/ITM/System software SICXE assembler/source/PassOne.h
 iostream
 -
@@ -17,6 +23,8 @@ map
 /Users/garys/Desktop/ITM/System software SICXE assembler/source/PassTwo.cpp
 PassTwo.h
 /Users/garys/Desktop/ITM/System software SICXE assembler/source/PassTwo.h
+OP_Table.h
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.h
 iostream
 -
 sstream
@@ -29,4 +37,10 @@ fstream
 -
 PassOne.h
 /Users/garys/Desktop/ITM/System software SICXE assembler/source/PassOne.h
+
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/main.cpp
+PassOne.h
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/PassOne.h
+PassTwo.h
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/PassTwo.h
 

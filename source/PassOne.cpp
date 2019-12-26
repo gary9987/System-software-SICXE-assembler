@@ -14,6 +14,7 @@ using namespace std;
 
 // Init static var
 int PassOne::shared_program_length = 0;
+std::map<std::string, int> PassOne::_shared_symbolTable;
 
 PassOne::PassOne(const std::string& in_url, const std::string& out_url){
     _infile.open(in_url);
@@ -60,8 +61,8 @@ void PassOne::perform() {
 
         // Append symbol to symbol table
         if(_symbol != ""){
-            if(_symbolTable.count(_symbol) == 0){
-                _symbolTable[_symbol] = _LOCCTR;
+            if(_shared_symbolTable.count(_symbol) == 0){
+                _shared_symbolTable[_symbol] = _LOCCTR;
             }
             else{
                 cerr << "ERROR! " <<_symbol<< " has already declared.\n";

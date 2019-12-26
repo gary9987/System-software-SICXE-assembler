@@ -3,6 +3,7 @@
 //
 
 #include "PassTwo.h"
+#include "OP_Table.h"
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -25,7 +26,19 @@ void PassTwo::perform() {
     // Generate text record first line
     _out_txrecord << "H" << setw(6) << left << _symbol << right << setw(6) << setfill('0') << hex << _LOCCTR << setw(6) << shared_program_length << endl;
 
+    while (getline(_infile, read)){
+        cout<<"now read line : "<<read<<endl;
+        _parseLine(read);
 
+        if(_opcode != "END"){
+
+        }
+        else{
+            _write_to_txrecord();
+            break;
+        }
+
+    }
 
 }
 
@@ -93,29 +106,99 @@ PassTwo::PassTwo(const std::string &inUrl, const std::string &outUrl, const std:
 
 void PassTwo::_write_to_txrecord() {
 
-    static int type = 0;
     // Is line full
     if(69 - _line_buffer.length() < 2 * _op_length){
 
         stringstream buf;
-        buf<<"T000000"<<hex<<(_line_buffer.length()-9)/2;
+        buf<<"T000000"<<hex<<(_line_buffer.length())/2;
 
         // Write to output txrecord file
         _out_txrecord << buf.rdbuf() <<_line_buffer<<endl;
 
         // Clear buf
         buf.str("");
-        buf << "T" << setw(6)<<setfill('0')<<hex<<_LOCCTR<<"XX";
+        buf << "T" << setw(6)<<setfill('0')<<hex<<_LOCCTR<<_obj_code;
 
-        string tmp;
-        buf >> tmp;
-        _line_buffer += tmp;
+        _line_buffer += buf.str();
 
-        return;
     }
 
-    if(type == 0){
+    else if(_opcode == "END"){
+        stringstream buf;
+        buf<<"T000000"<<hex<<(_line_buffer.length())/2;
 
+        // Write to output txrecord file
+        _out_txrecord << buf.rdbuf() <<_line_buffer<<endl;
+    }
+    else{
+        _line_buffer += _obj_code;
+
+    }
+
+}
+
+void PassTwo::clear() {
+    PassOne::clear();
+    _obj_code = "";
+}
+
+void PassTwo::_generate_object_code() {
+    int n, i, x, b, p, e;
+    OP_Table table;
+
+    int format = _getFormat(_opcode);
+
+    if(format == 1){
+        _obj_code = to_object_str(table[_opcode].opcode,format);
+    }
+    else if(format == 2){
+
+    }
+
+
+}
+
+string PassTwo::to_object_str(int int_opcode, int format, int length) const{
+
+    stringstream objBuf;
+
+    switch (format){
+        case 1:{
+            objBuf << setw(2) << setfill('0') << hex << int_opcode;
+            return objBuf.str();
+        }
+        case 2:{
+            objBuf << setw(4) << setfill('0') << hex << int_opcode;
+            return objBuf.str();
+        }
+        case 3:{
+            objBuf << setw(6) << setfill('0') << hex << int_opcode;
+            return objBuf.str();
+        }
+        case 4:{
+            objBuf << setw(8) << setfill('0') << hex << int_opcode;
+            return objBuf.str();
+        }
+        case 5:
+        case 6:{
+            if(length == 1){
+                objBuf << setw(2) << setfill('0') << hex << int_opcode;
+                return objBuf.str();
+            }
+            else if(length == 2){
+                objBuf << setw(4) << setfill('0') << hex << int_opcode;
+                return objBuf.str();
+            }
+            else{
+                objBuf << setw(6) << setfill('0') << hex << int_opcode;
+                return objBuf.str();
+            }
+        }
+        default: {
+            cerr << "Error, in fuction to_object_str\n";
+            return "";
+        }
     }
 }
+
 
