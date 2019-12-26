@@ -31,16 +31,17 @@ void PassTwo::perform() {
     _outfile<<read<<endl;
 
     while (getline(_infile, read)){
+        clear();
         cout<<"now read line : "<<read<<endl;
         _parseLine(read);
 
         if(_opcode != "END"){
             if(_generate_object_code()){
                 _write_to_txrecord();
-                _outfile<<setw(30)<<left<<read<<setw(8)<<left<<_obj_code<<endl;
+                _outfile<<setw(4)<<setfill('0')<<hex<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<setw(8)<<_obj_code<<endl;
             }
             else{
-                _outfile<<read<<endl;
+                _outfile<<setw(4)<<setfill('0')<<hex<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<endl;
             }
         }
         else{
@@ -62,7 +63,6 @@ void PassTwo::perform() {
 }
 
 void PassTwo::_parseLine(const std::string &line) {
-    PassOne::_parseLine(line);
     string cp_line(line);
     string temp;
     stringstream streamline(cp_line);
@@ -76,10 +76,15 @@ void PassTwo::_parseLine(const std::string &line) {
     int offset_idx = 0;
 
     // Get LOC
-    if(sub_line.size() > 2){
-        stringstream ss;
-        ss << std::hex << sub_line[0];
-        ss >> _LOCCTR;
+    if(sub_line.size() == 2){
+        // If is hex digit, get loc
+        if(sub_line[0] != "BASE"){
+            _LOCCTR = strtol(sub_line[0].c_str(), NULL, 16);
+            offset_idx ++;
+        }
+    }
+    else{
+        _LOCCTR = strtol(sub_line[offset_idx].c_str(), NULL, 16);
         offset_idx ++;
     }
 
@@ -205,7 +210,8 @@ bool PassTwo::_generate_object_code() {
         }
         else{
             // One OPERAND
-            opcode_value += (Register_Table::get(_operand1) << 4);
+            int temp = Register_Table::get(_operand1);
+            opcode_value += (temp << 4);
         }
 
         _obj_code = to_object_str(opcode_value, format);
@@ -421,7 +427,9 @@ bool PassTwo::_is_relative_mod(int &disp, int BASE) {
     }
 
 
-
+    if(cp_operand1.empty()){
+        return false;
+    }
     if(_shared_symbolTable.count(cp_operand1) == 0){
         cerr<<"Error, symbol not defined.\n";
         return false;

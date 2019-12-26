@@ -5,6 +5,7 @@
 #include "Register_Table.h"
 
 std::map<std::string, int> Register_Table::_table;
+Register_Table init;
 
 Register_Table::Register_Table() {
     _table["A"] = 0;

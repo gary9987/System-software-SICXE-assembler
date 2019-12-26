@@ -88,7 +88,6 @@ void PassOne::perform() {
             _LOCCTR += _byte_length(_operand1);
         }
         else if(_opcode == "BASE"){
-            _LOCCTR += 3;
             output_type = 1;
         }
         else{
@@ -135,6 +134,7 @@ void PassOne::_parseLine(const std::string &line) {
     // Get OPCODE
     _origin_opcode = sub_line[ 0 + offset_idx];
     _op_length = _getFormat(_origin_opcode);
+
     // Remove prfix '+'
     if(_origin_opcode[0] == '+'){
         _opcode.assign(_origin_opcode, 1, _origin_opcode.length()-1);
@@ -232,10 +232,10 @@ int PassOne::_byte_length(const std::string &operand) const {
         return 1;
     }
     else{
-        int idx = 1, len = 0;
+        int idx = 2, len = 1;
         for(; idx < operand.length(); idx++, len++) {
             if (operand[idx] == '\'') {
-                return len;
+                return len - 1;
             }
         }
     }
