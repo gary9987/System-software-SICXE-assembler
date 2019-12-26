@@ -13,6 +13,10 @@ CMakeFiles/source.dir/PassTwo.cpp.obj
  D:/ITM/System-software-SICXE-assembler/source/PassOne.h
  D:/ITM/System-software-SICXE-assembler/source/PassTwo.cpp
  D:/ITM/System-software-SICXE-assembler/source/PassTwo.h
+ D:/ITM/System-software-SICXE-assembler/source/Register_Table.h
+CMakeFiles/source.dir/Register_Table.cpp.obj
+ D:/ITM/System-software-SICXE-assembler/source/Register_Table.cpp
+ D:/ITM/System-software-SICXE-assembler/source/Register_Table.h
 CMakeFiles/source.dir/main.cpp.obj
  D:/ITM/System-software-SICXE-assembler/source/OP_Table.h
  D:/ITM/System-software-SICXE-assembler/source/PassOne.h

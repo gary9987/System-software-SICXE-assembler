@@ -12,6 +12,10 @@ CMakeFiles/source.dir/PassTwo.cpp.obj: ../OP_Table.h
 CMakeFiles/source.dir/PassTwo.cpp.obj: ../PassOne.h
 CMakeFiles/source.dir/PassTwo.cpp.obj: ../PassTwo.cpp
 CMakeFiles/source.dir/PassTwo.cpp.obj: ../PassTwo.h
+CMakeFiles/source.dir/PassTwo.cpp.obj: ../Register_Table.h
+
+CMakeFiles/source.dir/Register_Table.cpp.obj: ../Register_Table.cpp
+CMakeFiles/source.dir/Register_Table.cpp.obj: ../Register_Table.h
 
 CMakeFiles/source.dir/main.cpp.obj: ../OP_Table.h
 CMakeFiles/source.dir/main.cpp.obj: ../PassOne.h

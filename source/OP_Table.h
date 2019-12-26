@@ -23,7 +23,6 @@ public:
 
     virtual ~OP_Table();
 
-
     bool find(const std::string& target);
     const OP_Info& operator[] (const std::string& mnemonic);
 private:

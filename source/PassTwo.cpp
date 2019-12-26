@@ -4,8 +4,10 @@
 
 #include "PassTwo.h"
 #include "OP_Table.h"
+#include "Register_Table.h"
 #include <iostream>
 #include <sstream>
+#include <cstring>
 #include <vector>
 #include <iomanip>
 
@@ -143,16 +145,86 @@ void PassTwo::clear() {
     _obj_code = "";
 }
 
+
 void PassTwo::_generate_object_code() {
     int n, i, x, b, p, e;
+    int displcement = 0, BASE = 0;
 
     int format = _getFormat(_opcode);
-
+    int opcode_value = shared_table[_opcode].opcode;
     if(format == 1){
-        _obj_code = to_object_str(shared_table[_opcode].opcode,format);
+        _obj_code = to_object_str(opcode_value, format);
     }
     else if(format == 2){
+        // Shift left 8 bits
+        opcode_value <<= 8;
 
+        if(!_operand2.empty()){
+            // Two OPERAND
+            opcode_value += (Register_Table::get(_operand1) << 4) | (Register_Table::get(_operand2));
+        }
+        else{
+            // One OPERAND
+            opcode_value += (Register_Table::get(_operand1) << 4);
+        }
+
+        _obj_code = to_object_str(opcode_value, format);
+    }
+    else if(format == 3){
+        // Immediate addressing
+        if(_operand1[0] == '#'){
+            n = 0;
+            i = 1;
+        }
+        //Indirect addressing
+        else if(_operand1[0] == '@'){
+            n = 1;
+            i = 0;
+        }
+        else{
+            i = 1;
+            n = 1;
+        }
+
+        // Calculate displacement
+        if(_operand1[0] == '#' && isdigit(_operand1[1])){
+            displcement = strtol(_operand1.c_str() + 1, NULL, 10);
+            b = 0;
+            p = 0;
+        }
+        else if(_is_relative_mod(displcement, BASE)){
+            // PC relative
+            b = 0;
+            p = 1;
+        }
+        else{
+            // BASE relative
+            b = 1;
+            p = 0;
+        }
+
+        // Is index address
+        if( !_operand2.empty() && _operand2[0] == 'X'){
+            x = 1;
+        }
+        else{
+            x = 0;
+        }
+        e = 0;
+
+        if(_opcode == "RSUB"){
+            n = 1;
+            i = 1;
+            x = 0;
+            b = 0;
+            p = 0;
+            e = 0;
+        }
+
+        opcode_value <<=  16;
+        opcode_value += ((n << 17) + (i << 16) + (x << 15) + (b << 14) + (p << 13) + (e << 12));
+        opcode_value |= (displcement & 0x00000FFF) ;
+        to_object_str(opcode_value, format);
     }
 
 
@@ -199,6 +271,42 @@ string PassTwo::to_object_str(int int_opcode, int format, int length) const{
             return "";
         }
     }
+}
+
+bool PassTwo::_is_relative_mod(int &disp, int BASE) {
+
+    string cp_operand1;
+    if(_operand1[0] == '@' || _operand1[0] == '#'){
+        cp_operand1.assign(_operand1, 1, _operand1.length() - 1 );
+    }
+    else{
+        cp_operand1 = _operand1;
+    }
+
+
+
+    if(_shared_symbolTable.count(cp_operand1) == 0){
+        cerr<<"Error, symbol not defined.\n";
+        return false;
+    }
+    int program_counter = _LOCCTR + _op_length;
+
+    // PC relative
+    disp = _shared_symbolTable[cp_operand1] - program_counter;
+    if(disp >= -2048 && disp <= 2048){
+        return true;
+    }
+
+    // Base relative
+    disp = _shared_symbolTable[cp_operand1] - BASE;
+    if(disp < 4096){
+        return false;
+    }
+    else{
+        cerr<<"Error, addressing mod is invalid\n";
+        return false;
+    }
+
 }
 
 

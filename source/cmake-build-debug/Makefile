@@ -203,6 +203,33 @@ PassTwo.cpp.s:
 	$(MAKE) -f CMakeFiles\source.dir\build.make CMakeFiles/source.dir/PassTwo.cpp.s
 .PHONY : PassTwo.cpp.s
 
+Register_Table.obj: Register_Table.cpp.obj
+
+.PHONY : Register_Table.obj
+
+# target to build an object file
+Register_Table.cpp.obj:
+	$(MAKE) -f CMakeFiles\source.dir\build.make CMakeFiles/source.dir/Register_Table.cpp.obj
+.PHONY : Register_Table.cpp.obj
+
+Register_Table.i: Register_Table.cpp.i
+
+.PHONY : Register_Table.i
+
+# target to preprocess a source file
+Register_Table.cpp.i:
+	$(MAKE) -f CMakeFiles\source.dir\build.make CMakeFiles/source.dir/Register_Table.cpp.i
+.PHONY : Register_Table.cpp.i
+
+Register_Table.s: Register_Table.cpp.s
+
+.PHONY : Register_Table.s
+
+# target to generate assembly for a file
+Register_Table.cpp.s:
+	$(MAKE) -f CMakeFiles\source.dir\build.make CMakeFiles/source.dir/Register_Table.cpp.s
+.PHONY : Register_Table.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -248,6 +275,9 @@ help:
 	@echo ... PassTwo.obj
 	@echo ... PassTwo.i
 	@echo ... PassTwo.s
+	@echo ... Register_Table.obj
+	@echo ... Register_Table.i
+	@echo ... Register_Table.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

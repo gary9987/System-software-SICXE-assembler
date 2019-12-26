@@ -27,9 +27,13 @@ PassTwo.h
 D:/ITM/System-software-SICXE-assembler/source/PassTwo.h
 OP_Table.h
 D:/ITM/System-software-SICXE-assembler/source/OP_Table.h
+Register_Table.h
+D:/ITM/System-software-SICXE-assembler/source/Register_Table.h
 iostream
 -
 sstream
+-
+cstring
 -
 vector
 -
@@ -41,4 +45,10 @@ fstream
 -
 PassOne.h
 D:/ITM/System-software-SICXE-assembler/source/PassOne.h
+
+D:/ITM/System-software-SICXE-assembler/source/Register_Table.h
+map
+-
+string
+-
 

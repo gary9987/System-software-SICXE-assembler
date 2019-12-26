@@ -20,6 +20,7 @@ private:
     std::string _line_buffer;
     std::string _obj_code;
 
+    bool _is_relative_mod(int &disp, int BASE);
     void _generate_object_code();
     std::string to_object_str(int int_opcode, int format, int length = 0) const;
     void _write_to_txrecord();
