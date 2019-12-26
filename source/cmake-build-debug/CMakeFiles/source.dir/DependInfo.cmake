@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/garys/Desktop/ITM/System software SICXE assembler/source/OP_Table.cpp" "/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/source.dir/OP_Table.cpp.o"
   "/Users/garys/Desktop/ITM/System software SICXE assembler/source/PassOne.cpp" "/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/source.dir/PassOne.cpp.o"
+  "/Users/garys/Desktop/ITM/System software SICXE assembler/source/PassTwo.cpp" "/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/source.dir/PassTwo.cpp.o"
   "/Users/garys/Desktop/ITM/System software SICXE assembler/source/main.cpp" "/Users/garys/Desktop/ITM/System software SICXE assembler/source/cmake-build-debug/CMakeFiles/source.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")

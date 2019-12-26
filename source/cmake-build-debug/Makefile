@@ -177,6 +177,33 @@ PassOne.cpp.s:
 	$(MAKE) -f CMakeFiles/source.dir/build.make CMakeFiles/source.dir/PassOne.cpp.s
 .PHONY : PassOne.cpp.s
 
+PassTwo.o: PassTwo.cpp.o
+
+.PHONY : PassTwo.o
+
+# target to build an object file
+PassTwo.cpp.o:
+	$(MAKE) -f CMakeFiles/source.dir/build.make CMakeFiles/source.dir/PassTwo.cpp.o
+.PHONY : PassTwo.cpp.o
+
+PassTwo.i: PassTwo.cpp.i
+
+.PHONY : PassTwo.i
+
+# target to preprocess a source file
+PassTwo.cpp.i:
+	$(MAKE) -f CMakeFiles/source.dir/build.make CMakeFiles/source.dir/PassTwo.cpp.i
+.PHONY : PassTwo.cpp.i
+
+PassTwo.s: PassTwo.cpp.s
+
+.PHONY : PassTwo.s
+
+# target to generate assembly for a file
+PassTwo.cpp.s:
+	$(MAKE) -f CMakeFiles/source.dir/build.make CMakeFiles/source.dir/PassTwo.cpp.s
+.PHONY : PassTwo.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -219,6 +246,9 @@ help:
 	@echo "... PassOne.o"
 	@echo "... PassOne.i"
 	@echo "... PassOne.s"
+	@echo "... PassTwo.o"
+	@echo "... PassTwo.i"
+	@echo "... PassTwo.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -12,6 +12,9 @@
 
 using namespace std;
 
+// Init static var
+int PassOne::shared_program_length = 0;
+
 PassOne::PassOne(const std::string& in_url, const std::string& out_url){
     _infile.open(in_url);
     _outfile.open(out_url);
@@ -101,6 +104,7 @@ void PassOne::perform() {
         }
     }
 
+    shared_program_length = _LOCCTR;
 
     // End Pass One
     _outfile.close();

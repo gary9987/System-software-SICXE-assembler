@@ -12,10 +12,10 @@
 class PassOne {
 public:
     PassOne(const std::string& in_url, const std::string& out_url);
-    void perform();
+    virtual void perform();
     void clear();
 
-private:
+protected:
     std::ifstream _infile;
     std::ofstream _outfile;
 
@@ -27,14 +27,15 @@ private:
     std::string _operand2;
     std::map<std::string, int> _symbolTable;
 
-
+    static int shared_program_length;
 
     bool _flag_extended = false;
     int _op_length = 0, _operand_count = 0;
     int _LOCCTR = 0;
 
     int _getFormat(const std::string &code);
-    void _parseLine(const std::string &line);
+
+    virtual void _parseLine(const std::string &line);
     int _byte_length(const std::string &operand) const;
     void _append_to_outfile(int loc, const std::string &in);
 };

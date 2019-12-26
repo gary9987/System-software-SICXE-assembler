@@ -14,7 +14,19 @@ fstream
 map
 -
 
-/Users/garys/Desktop/ITM/System software SICXE assembler/source/main.cpp
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/PassTwo.cpp
+PassTwo.h
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/PassTwo.h
+iostream
+-
+sstream
+-
+vector
+-
+
+/Users/garys/Desktop/ITM/System software SICXE assembler/source/PassTwo.h
+fstream
+-
 PassOne.h
 /Users/garys/Desktop/ITM/System software SICXE assembler/source/PassOne.h
 
