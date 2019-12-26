@@ -9,14 +9,14 @@ int main() {
     string in_file_url, out_file_paas1, out_file_pass2, out_texr_record;
 #if defined(_WIN64) || defined(_WIN32)
     in_file_url = "..\\..\\test_sic_code\\sic_code.txt";
-    out_file_paas1 = "pass1_result.txt";
-    out_file_pass2 = "pass2_result.txt";
-    out_texr_record = "text_record.txt";
+    out_file_paas1 = "..\\..\\result\\pass1_result.txt";
+    out_file_pass2 = "..\\..\\result\\pass2_result.txt";
+    out_texr_record = "..\\..\\result\\text_record.txt";
 #else
     in_file_url = "../../test_sic_code/sic_code.txt";
-    out_file_paas1 = "pass1_result.txt";
-    out_file_pass2 = "pass2_result.txt";
-    out_texr_record = "text_record.txt";
+    out_file_paas1 = "../../result/pass1_result.txt";
+    out_file_pass2 = "../../result/pass2_result.txt";
+    out_texr_record = "../../result/text_record.txt";
 #endif
 
     PassOne ps1(in_file_url, out_file_paas1);

@@ -38,13 +38,14 @@ void PassTwo::perform() {
         if(_opcode != "END"){
             if(_generate_object_code()){
                 _write_to_txrecord();
-                _outfile<<setw(4)<<setfill('0')<<hex<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<setw(8)<<_obj_code<<endl;
+                _outfile<<setw(4)<<setfill('0')<<hex<<right<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_origin_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<setw(8)<<_obj_code<<endl;
             }
             else{
-                _outfile<<setw(4)<<setfill('0')<<hex<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<endl;
+                _outfile<<setw(4)<<setfill('0')<<hex<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_origin_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<endl;
             }
         }
         else{
+            _outfile<<read<<endl;
             _write_to_txrecord();
             break;
         }
@@ -78,7 +79,7 @@ void PassTwo::_parseLine(const std::string &line) {
     // Get LOC
     if(sub_line.size() == 2){
         // If is hex digit, get loc
-        if(sub_line[0] != "BASE"){
+        if(sub_line[0] != "BASE" && sub_line[0] != "END"){
             _LOCCTR = strtol(sub_line[0].c_str(), NULL, 16);
             offset_idx ++;
         }
@@ -136,27 +137,43 @@ void PassTwo::_parseLine(const std::string &line) {
 PassTwo::PassTwo(const std::string &inUrl, const std::string &outUrl, const std::string &out_resultUrl): PassOne(inUrl, outUrl), _out_txrecord(out_resultUrl) {}
 
 void PassTwo::_write_to_txrecord() {
-
+    static int start_addr = 0;
+    static int pre_state = 1;
     // Is line full
-    if(69 - _line_buffer.length() < 2 * _op_length){
+    if(60 - _line_buffer.length() < 2 * _op_length){
 
         stringstream buf;
-        buf<<"T000000"<<hex<<(_line_buffer.length())/2;
+        buf<<"T"<<setw(6)<<setfill('0')<<hex<<start_addr<<(_line_buffer.length())/2;
 
         // Write to output txrecord file
         _out_txrecord << buf.rdbuf() <<_line_buffer<<endl;
 
-        // Clear buf
-        buf.str("");
-        buf << "T" << setw(6)<<setfill('0')<<hex<<_LOCCTR<<_obj_code;
-
-        _line_buffer += buf.str();
+        // New Line
+        _line_buffer = _obj_code;
+        start_addr = _LOCCTR;
 
     }
+    else if(pre_state == 1){
+        _line_buffer = _obj_code;
+        start_addr = _LOCCTR;
+        pre_state = 0;
+    }
+    else if(pre_state == 2){
+        stringstream buf;
+        buf<<"T"<<setw(6)<<setfill('0')<<hex<<start_addr<<(_line_buffer.length())/2;
 
+        // Write to output txrecord file
+        _out_txrecord << buf.rdbuf() <<_line_buffer<<endl;
+
+        // New Line
+        _line_buffer = _obj_code;
+        start_addr = _LOCCTR;
+
+        pre_state = 0;
+    }
     else if(_opcode == "END"){
         stringstream buf;
-        buf<<"T000000"<<hex<<(_line_buffer.length())/2;
+        buf<<"T"<<setw(6)<<setfill('0')<<hex<<start_addr<<(_line_buffer.length())/2;
 
         // Write to output txrecord file
         _out_txrecord << buf.rdbuf() <<_line_buffer<<endl;
@@ -164,6 +181,9 @@ void PassTwo::_write_to_txrecord() {
     else{
         _line_buffer += _obj_code;
 
+        if(_symbol == "EOF"){
+            pre_state = 2;
+        }
     }
 
 }
@@ -318,7 +338,7 @@ bool PassTwo::_generate_object_code() {
             }
 
             displcement = _shared_symbolTable[cp_operand1];
-            _format4_vec.push_back(_LOCCTR);
+            _format4_vec.push_back(_LOCCTR+1);
             b = 0;
             p = 0;
 
