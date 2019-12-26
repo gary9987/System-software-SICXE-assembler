@@ -145,12 +145,11 @@ void PassTwo::clear() {
 
 void PassTwo::_generate_object_code() {
     int n, i, x, b, p, e;
-    OP_Table table;
 
     int format = _getFormat(_opcode);
 
     if(format == 1){
-        _obj_code = to_object_str(table[_opcode].opcode,format);
+        _obj_code = to_object_str(shared_table[_opcode].opcode,format);
     }
     else if(format == 2){
 

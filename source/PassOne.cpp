@@ -15,6 +15,7 @@ using namespace std;
 // Init static var
 int PassOne::shared_program_length = 0;
 std::map<std::string, int> PassOne::_shared_symbolTable;
+OP_Table PassOne::shared_table;
 
 PassOne::PassOne(const std::string& in_url, const std::string& out_url){
     _infile.open(in_url);
@@ -70,8 +71,7 @@ void PassOne::perform() {
         }
 
         // Find OP code
-        OP_Table opTable;
-        if(opTable.find(_opcode)){
+        if(shared_table.find(_opcode)){
             _LOCCTR += _op_length;
         }
         else if(_opcode == "WORD"){
