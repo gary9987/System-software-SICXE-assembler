@@ -7,6 +7,7 @@
 #include "Register_Table.h"
 #include <iostream>
 #include <sstream>
+#include <cctype>
 #include <cstring>
 #include <vector>
 #include <iomanip>
@@ -150,8 +151,13 @@ void PassTwo::_write_to_txrecord() {
         stringstream buf;
         buf<<"T"<<setw(6)<<setfill('0')<<hex<<start_addr<<(_line_buffer.length())/2;
 
+        string tmp;
+        buf >> tmp;
+        for(auto &i:tmp){
+            i = toupper(i);
+        }
         // Write to output txrecord file
-        _out_txrecord << buf.rdbuf() <<_line_buffer<<endl;
+        _out_txrecord << tmp <<_line_buffer<<endl;
 
         // New Line
         _line_buffer = _obj_code;
@@ -167,8 +173,14 @@ void PassTwo::_write_to_txrecord() {
         stringstream buf;
         buf<<"T"<<setw(6)<<setfill('0')<<hex<<start_addr<<(_line_buffer.length())/2;
 
+        string tmp;
+        buf >> tmp;
+        for(auto &i:tmp){
+            i = toupper(i);
+        }
+
         // Write to output txrecord file
-        _out_txrecord << buf.rdbuf() <<_line_buffer<<endl;
+        _out_txrecord << tmp <<_line_buffer<<endl;
 
         // New Line
         _line_buffer = _obj_code;
@@ -180,8 +192,13 @@ void PassTwo::_write_to_txrecord() {
         stringstream buf;
         buf<<"T"<<setw(6)<<setfill('0')<<hex<<start_addr<<(_line_buffer.length())/2;
 
+        string tmp;
+        buf >> tmp;
+        for(auto &i:tmp){
+            i = toupper(i);
+        }
         // Write to output txrecord file
-        _out_txrecord << buf.rdbuf() <<_line_buffer<<endl;
+        _out_txrecord <<tmp <<_line_buffer<<endl;
     }
     else{
         _line_buffer += _obj_code;
@@ -402,44 +419,49 @@ bool PassTwo::_generate_object_code() {
 string PassTwo::to_object_str(int int_opcode, int format, int length) const{
 
     stringstream objBuf;
-
     switch (format){
         case 1:{
             objBuf << setw(2) << setfill('0') << hex << int_opcode;
-            return objBuf.str();
+            break;
         }
         case 2:{
             objBuf << setw(4) << setfill('0') << hex << int_opcode;
-            return objBuf.str();
+            break;
         }
         case 3:{
             objBuf << setw(6) << setfill('0') << hex << int_opcode;
-            return objBuf.str();
+            break;
         }
         case 4:{
             objBuf << setw(8) << setfill('0') << hex << int_opcode;
-            return objBuf.str();
+            break;
         }
         case 5:
         case 6:{
             if(length == 1){
                 objBuf << setw(2) << setfill('0') << hex << int_opcode;
-                return objBuf.str();
+                break;
             }
             else if(length == 2){
                 objBuf << setw(4) << setfill('0') << hex << int_opcode;
-                return objBuf.str();
+                break;
             }
             else{
                 objBuf << setw(6) << setfill('0') << hex << int_opcode;
-                return objBuf.str();
+                break;
             }
         }
         default: {
             cerr << "Error, in fuction to_object_str\n";
-            return "";
+            break;
         }
     }
+    string re;
+    objBuf >> re;
+    for(auto &i:re){
+        i = toupper(i);
+    }
+    return re;
 }
 
 bool PassTwo::_is_relative_mod(int &disp, int BASE) {
