@@ -41,7 +41,12 @@ void PassTwo::perform() {
                 _outfile<<setw(4)<<setfill('0')<<hex<<right<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_origin_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<setw(8)<<_obj_code<<endl;
             }
             else{
-                _outfile<<setw(4)<<setfill('0')<<hex<<right<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_origin_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<endl;
+                if(_opcode == "BASE"){
+                    _outfile<<"    "<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_origin_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<setw(8)<<_obj_code<<endl;
+                }
+                else{
+                    _outfile<<setw(4)<<setfill('0')<<hex<<right<<_LOCCTR<<"    "<<setfill(' ')<<setw(6)<<left<<_symbol<<"    "<<setw(6)<<_origin_opcode<<"    "<<setw(10)<<_origin_operand<<"    "<<endl;
+                }
             }
         }
         else{
