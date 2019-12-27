@@ -398,10 +398,14 @@ bool PassTwo::_generate_object_code() {
         return true;
 
     }
-    // skip "WORD"
+    if(_opcode == "WORD"){
+        opcode_value = strtol(_operand1.c_str(), NULL, 10);
+        int s_length = 1;
+        _obj_code = to_object_str(opcode_value, format, s_length);
+        return true;
+    }
     // OPCODE == "BASE"
     if(format == 7){
-
         BASE = _shared_symbolTable[_operand1];
         return false;
     }
