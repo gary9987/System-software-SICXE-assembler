@@ -228,13 +228,17 @@ void PassOne::clear() {
 }
 
 int PassOne::_byte_length(const std::string &operand) const {
-    if(operand[0] == 'X'){
+    string cp_operand(operand);
+    for(auto &i:cp_operand){
+        i = toupper(i);
+    }
+    if(cp_operand[0] == 'X'){
         return 1;
     }
     else{
         int idx = 2, len = 1;
-        for(; idx < operand.length(); idx++, len++) {
-            if (operand[idx] == '\'') {
+        for(; idx < cp_operand.length(); idx++, len++) {
+            if (cp_operand[idx] == '\'') {
                 return len - 1;
             }
         }
