@@ -10,11 +10,14 @@
 
 class Register_Table {
 public:
-    Register_Table();
-    static int get(const std::string& reg);
+    static Register_Table& getInstance();
+    int get(const std::string& reg);
 
 private:
-    static std::map<std::string, int> _table;
+
+    std::map<std::string, int> _table;
+    Register_Table();
+
 };
 
 

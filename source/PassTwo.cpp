@@ -128,13 +128,11 @@ void PassTwo::_parseLine(const std::string &line) {
 
         if( idx < _origin_operand.length()){
             // Have two operands
-            _operand_count = 2;
             _operand1.assign(_origin_operand, 0, idx);
             _operand2.assign(_origin_operand, idx+1 , _origin_operand.length()-idx-1);
         }
         else{
             // Have one operand
-            _operand_count = 1;
             _operand1 = _origin_operand;
         }
     }
@@ -226,34 +224,34 @@ bool PassTwo::_generate_object_code() {
     int opcode_value = 0;
 
     if(format == 1){
-        if(!shared_table.find(_opcode)){
+        if(!OP_Table::getInstance().find(_opcode)){
             cerr<<"Error, OPCODE not found,\n";
             return false;
         }
         else{
-            opcode_value = shared_table[_opcode].opcode;
+            opcode_value = OP_Table::getInstance().get(_opcode).opcode;
         }
         _obj_code = to_object_str(opcode_value, format);
         return true;
     }
     if(format == 2){
-        if(!shared_table.find(_opcode)){
+        if(!OP_Table::getInstance().find(_opcode)){
             cerr<<"Error, OPCODE not found,\n";
             return false;
         }
         else{
-            opcode_value = shared_table[_opcode].opcode;
+            opcode_value = OP_Table::getInstance().get(_opcode).opcode;
         }
         // Shift left 8 bits
         opcode_value <<= 8;
 
         if(!_operand2.empty()){
             // Two OPERAND
-            opcode_value += (Register_Table::get(_operand1) << 4) | (Register_Table::get(_operand2));
+            opcode_value += (Register_Table::getInstance().get(_operand1) << 4) | (Register_Table::getInstance().get(_operand2));
         }
         else{
             // One OPERAND
-            int temp = Register_Table::get(_operand1);
+            int temp = Register_Table::getInstance().get(_operand1);
             opcode_value += (temp << 4);
         }
 
@@ -261,12 +259,12 @@ bool PassTwo::_generate_object_code() {
         return true;
     }
     if(format == 3){
-        if(!shared_table.find(_opcode)){
+        if(!OP_Table::getInstance().find(_opcode)){
             cerr<<"Error, OPCODE not found,\n";
             return false;
         }
         else{
-            opcode_value = shared_table[_opcode].opcode;
+            opcode_value = OP_Table::getInstance().get(_opcode).opcode;
         }
         // Immediate addressing
         if(_operand1[0] == '#'){
@@ -325,12 +323,12 @@ bool PassTwo::_generate_object_code() {
         return true;
     }
     if(format == 4){
-        if(!shared_table.find(_opcode)){
+        if(!OP_Table::getInstance().find(_opcode)){
             cerr<<"Error, OPCODE not found,\n";
             return false;
         }
         else{
-            opcode_value = shared_table[_opcode].opcode;
+            opcode_value = OP_Table::getInstance().get(_opcode).opcode;
         }
         // Immediate addressing
         if(_operand1[0] == '#'){
@@ -468,7 +466,7 @@ string PassTwo::to_object_str(int int_opcode, int format, int length) const{
     return re;
 }
 
-bool PassTwo::_is_relative_mod(int &disp, int BASE) {
+bool PassTwo::_is_relative_mod(int &disp, int BASE) const {
 
     string cp_operand1;
     if(_operand1[0] == '@' || _operand1[0] == '#'){

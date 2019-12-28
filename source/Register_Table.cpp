@@ -4,8 +4,6 @@
 
 #include "Register_Table.h"
 
-std::map<std::string, int> Register_Table::_table;
-Register_Table init;
 
 Register_Table::Register_Table() {
     _table["A"] = 0;
@@ -21,4 +19,9 @@ Register_Table::Register_Table() {
 
 int Register_Table::get(const std::string &reg){
     return _table[reg];
+}
+
+Register_Table &Register_Table::getInstance() {
+    static Register_Table instance;
+    return instance;
 }

@@ -17,12 +17,11 @@ public:
     void perform() override ;
     void clear() override ;
 private:
-    const int _line_length = 70;
     std::string _line_buffer;
     std::string _obj_code;
-
     std::vector<int> _format4_vec;
-    bool _is_relative_mod(int &disp, int BASE);
+
+    bool _is_relative_mod(int &disp, int BASE) const;
     bool _generate_object_code();
     std::string to_object_str(int int_opcode, int format, int length = 0) const;
     void _write_to_txrecord();
