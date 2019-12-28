@@ -30,7 +30,6 @@ protected:
     static std::map<std::string, int> _shared_symbolTable;
 
     static int shared_program_length;
-    static OP_Table shared_table;
 
     bool _flag_extended = false;
     int _op_length = 0, _operand_count = 0;

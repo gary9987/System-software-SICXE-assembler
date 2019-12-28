@@ -72,11 +72,11 @@ OP_Table::OP_Table() {
     _table["WD"] = new OP_Info(0xDC, 3);
 }
 
-const OP_Info &OP_Table::operator[](const std::string &mnemonic) {
+const OP_Info &OP_Table::get(const std::string &mnemonic) {
     return *_table[mnemonic];
 }
 
-bool OP_Table::find(const std::string &target){
+bool OP_Table::find(const std::string &target) const{
     return _table.count(target) == 1 ? true : false;
 }
 
@@ -84,4 +84,9 @@ OP_Table::~OP_Table() {
     for(auto &i:_table){
         delete(i.second);
     }
+}
+
+OP_Table &OP_Table::getInstance() {
+    static OP_Table instance;
+    return instance;
 }

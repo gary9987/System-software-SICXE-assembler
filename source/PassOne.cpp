@@ -15,7 +15,6 @@ using namespace std;
 // Init static var
 int PassOne::shared_program_length = 0;
 std::map<std::string, int> PassOne::_shared_symbolTable;
-OP_Table PassOne::shared_table;
 
 PassOne::PassOne(const std::string& in_url, const std::string& out_url){
     _infile.open(in_url);
@@ -72,7 +71,7 @@ void PassOne::perform() {
         }
 
         // Find OP code
-        if(shared_table.find(_opcode)){
+        if(OP_Table::getInstance().find(_opcode)){
             _LOCCTR += _op_length;
         }
         else if(_opcode == "WORD"){
@@ -181,14 +180,12 @@ int PassOne::_getFormat(const std::string &code) {
         cp_code.assign(cp_code, 1, cp_code.length()-1);
     }
 
-
-    OP_Table table;
-    if(table.find(cp_code)){
-        if(table[cp_code].formate == 3){
+    if(OP_Table::getInstance().find(cp_code)){
+        if(OP_Table::getInstance().get(cp_code).formate == 3){
             re = _flag_extended ? 4 : 3;
         }
         else{
-            re = table[cp_code].formate;
+            re = OP_Table::getInstance().get(cp_code).formate;
         }
     }
     else if(cp_code == "BYTE"){

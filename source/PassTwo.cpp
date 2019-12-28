@@ -226,23 +226,23 @@ bool PassTwo::_generate_object_code() {
     int opcode_value = 0;
 
     if(format == 1){
-        if(!shared_table.find(_opcode)){
+        if(!OP_Table::getInstance().find(_opcode)){
             cerr<<"Error, OPCODE not found,\n";
             return false;
         }
         else{
-            opcode_value = shared_table[_opcode].opcode;
+            opcode_value = OP_Table::getInstance().get(_opcode).opcode;
         }
         _obj_code = to_object_str(opcode_value, format);
         return true;
     }
     if(format == 2){
-        if(!shared_table.find(_opcode)){
+        if(!OP_Table::getInstance().find(_opcode)){
             cerr<<"Error, OPCODE not found,\n";
             return false;
         }
         else{
-            opcode_value = shared_table[_opcode].opcode;
+            opcode_value = OP_Table::getInstance().get(_opcode).opcode;
         }
         // Shift left 8 bits
         opcode_value <<= 8;
@@ -261,12 +261,12 @@ bool PassTwo::_generate_object_code() {
         return true;
     }
     if(format == 3){
-        if(!shared_table.find(_opcode)){
+        if(!OP_Table::getInstance().find(_opcode)){
             cerr<<"Error, OPCODE not found,\n";
             return false;
         }
         else{
-            opcode_value = shared_table[_opcode].opcode;
+            opcode_value = OP_Table::getInstance().get(_opcode).opcode;
         }
         // Immediate addressing
         if(_operand1[0] == '#'){
@@ -325,12 +325,12 @@ bool PassTwo::_generate_object_code() {
         return true;
     }
     if(format == 4){
-        if(!shared_table.find(_opcode)){
+        if(!OP_Table::getInstance().find(_opcode)){
             cerr<<"Error, OPCODE not found,\n";
             return false;
         }
         else{
-            opcode_value = shared_table[_opcode].opcode;
+            opcode_value = OP_Table::getInstance().get(_opcode).opcode;
         }
         // Immediate addressing
         if(_operand1[0] == '#'){

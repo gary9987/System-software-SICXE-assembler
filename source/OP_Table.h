@@ -14,19 +14,19 @@ public:
     OP_Info(int opcode, int formate);
     int opcode;
     int formate;
-
 };
 
 class OP_Table{
 public:
+
+    static OP_Table& getInstance();
+
+    bool find(const std::string& target) const;
+    const OP_Info& get(const std::string& mnemonic);
+    ~OP_Table();
+private:
     OP_Table();
 
-    virtual ~OP_Table();
-
-    bool find(const std::string& target);
-    const OP_Info& operator[] (const std::string& mnemonic);
-
-private:
     std::map<std::string, OP_Info*> _table;
 };
 
