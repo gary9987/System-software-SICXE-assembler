@@ -25,6 +25,7 @@ public:
 
     bool find(const std::string& target);
     const OP_Info& operator[] (const std::string& mnemonic);
+
 private:
     std::map<std::string, OP_Info*> _table;
 };

@@ -249,11 +249,11 @@ bool PassTwo::_generate_object_code() {
 
         if(!_operand2.empty()){
             // Two OPERAND
-            opcode_value += (Register_Table::get(_operand1) << 4) | (Register_Table::get(_operand2));
+            opcode_value += (Register_Table::getInstance().get(_operand1) << 4) | (Register_Table::getInstance().get(_operand2));
         }
         else{
             // One OPERAND
-            int temp = Register_Table::get(_operand1);
+            int temp = Register_Table::getInstance().get(_operand1);
             opcode_value += (temp << 4);
         }
 
