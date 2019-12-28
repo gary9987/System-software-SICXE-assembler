@@ -16,10 +16,8 @@ public:
 private:
 
     std::map<std::string, int> _table;
-
     Register_Table();
-    Register_Table(Register_Table const&);
-    void operator=(Register_Table const&);
+
 };
 
 

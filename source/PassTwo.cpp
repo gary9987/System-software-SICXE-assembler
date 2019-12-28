@@ -128,13 +128,11 @@ void PassTwo::_parseLine(const std::string &line) {
 
         if( idx < _origin_operand.length()){
             // Have two operands
-            _operand_count = 2;
             _operand1.assign(_origin_operand, 0, idx);
             _operand2.assign(_origin_operand, idx+1 , _origin_operand.length()-idx-1);
         }
         else{
             // Have one operand
-            _operand_count = 1;
             _operand1 = _origin_operand;
         }
     }
@@ -468,7 +466,7 @@ string PassTwo::to_object_str(int int_opcode, int format, int length) const{
     return re;
 }
 
-bool PassTwo::_is_relative_mod(int &disp, int BASE) {
+bool PassTwo::_is_relative_mod(int &disp, int BASE) const {
 
     string cp_operand1;
     if(_operand1[0] == '@' || _operand1[0] == '#'){

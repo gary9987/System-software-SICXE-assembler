@@ -32,7 +32,7 @@ protected:
     static int shared_program_length;
 
     bool _flag_extended = false;
-    int _op_length = 0, _operand_count = 0;
+    int _op_length = 0;
     int _LOCCTR = 0;
 
     int _getFormat(const std::string &code);
