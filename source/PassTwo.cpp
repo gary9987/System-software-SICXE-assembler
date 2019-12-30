@@ -144,7 +144,7 @@ void PassTwo::_write_to_txrecord() {
     static int start_addr = 0;
     static int pre_state = 1;
     // Is line full
-    if(60 - _line_buffer.length() < 2 * _op_length){
+    if(60 - _line_buffer.length() < _obj_code.length()){
 
         stringstream buf;
         buf<<"T"<<setw(6)<<setfill('0')<<hex<<start_addr<<(_line_buffer.length())/2;
@@ -379,6 +379,12 @@ bool PassTwo::_generate_object_code() {
         _obj_code = to_object_str(opcode_value, format);
         return true;
     }
+    // Else format == -1 OPCODE == "BASE"
+    if(format == -1){
+        BASE = _shared_symbolTable[_operand1];
+        return false;
+    }
+    // Else format == -2, OPCODE == "WORD" or "BYTE"
     if(_opcode == "BYTE"){
         int s_length = 1;
         if(_operand1[0] == 'C'){
@@ -402,11 +408,7 @@ bool PassTwo::_generate_object_code() {
         _obj_code = to_object_str(opcode_value, format, s_length);
         return true;
     }
-    // OPCODE == "BASE"
-    if(format == 7){
-        BASE = _shared_symbolTable[_operand1];
-        return false;
-    }
+
 
     if(format == 0){
         return false;
@@ -438,8 +440,7 @@ string PassTwo::to_object_str(int int_opcode, int format, int length) const{
             objBuf << setw(8) << setfill('0') << hex << int_opcode;
             break;
         }
-        case 5:
-        case 6:{
+        case -2:{ // BYTE and WORD
             if(length == 1){
                 objBuf << setw(2) << setfill('0') << hex << int_opcode;
                 break;

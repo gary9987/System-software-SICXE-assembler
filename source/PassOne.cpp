@@ -75,7 +75,7 @@ void PassOne::perform() {
             _LOCCTR += _op_length;
         }
         else if(_opcode == "WORD"){
-            _LOCCTR += 3;
+            _LOCCTR += 3; // 1 WORD 3 bytes
         }
         else if(_opcode == "RESW"){
             _LOCCTR += 3 * strtol(_operand1.c_str(), NULL, 10);
@@ -186,27 +186,14 @@ int PassOne::_getFormat(const std::string &code){
             re = OP_Table::getInstance().get(cp_code).formate;
         }
     }
-    else if(cp_code == "BYTE"){
-        re = 5;
-    }
-    else if(cp_code == "WORD"){
-        re = 6;
-    }
-    else if(cp_code == "RESB"){
-        re = 0;
-    }
-    else if(cp_code == "RESW"){
-        re = 0;
-    }
     else if(cp_code == "BASE"){
-        re = 7;
+        re = -1; // BASE
     }
-    else if(cp_code == "START"){
-        re = 0;
+    else if(cp_code == "BYTE" || cp_code == "WORD"){
+        re = -2;
     }
-    else if(cp_code == "END"){
-        re = 0;
-    }
+    // START RESW RESB END return 0
+
     return re;
 }
 
