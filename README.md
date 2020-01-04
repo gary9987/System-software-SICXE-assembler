@@ -1,15 +1,15 @@
 System software SICXE assembler
 ===
-Using Language: C++11
-source code  in `/source`
-project file in `/source/cmake-build-debug`
+* Using Language: C++11
+* source code  in `/source`
+* project file in `/source/cmake-build-debug`
 
 ## Build and Run
 
 
 
-Input file: `/test_sic_code/Fig2_5.txt`
-Ouput file: `/result/pass1_result.txt`, `/result/pass2_result.txt`, `result/text_record.txt`
+* Input file: `/test_sic_code/Fig2_5.txt`
+* Ouput file: `/result/pass1_result.txt`, `/result/pass2_result.txt`, `result/text_record.txt`
 
 
 #### MacOS and Ubuntu Linux
