@@ -8,8 +8,8 @@ System software SICXE assembler
 
 
 
-* Input file: `/test_sic_code/Fig2_5.txt`
-* Ouput file: `/result/pass1_result.txt`, `/result/pass2_result.txt`, `result/text_record.txt`
+* Input file: `/source/cmake-build-debug/input.txt`
+* Ouput file: `/source/cmake-build-debug/pass1_result.txt`, `/source/cmake-build-debug/pass2_result.txt`, `/source/cmake-build-debug/text_record.txt`
 
 
 #### MacOS and Ubuntu Linux
