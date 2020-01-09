@@ -8,8 +8,8 @@ System software SICXE assembler
 
 
 
-* Input file: `/source/cmake-build-debug/input.txt`
-* Ouput file: `/source/cmake-build-debug/pass1_result.txt`, `/source/cmake-build-debug/pass2_result.txt`, `/source/cmake-build-debug/text_record.txt`
+* Input file: `Need named input.txt and put it in the folder which has excutable image(.exe or ...)`
+* Ouput file: `pass1_result.txt`, `pass2_result.txt`, `text_record.txt`
 
 
 #### MacOS and Ubuntu Linux
