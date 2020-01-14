@@ -404,7 +404,7 @@ bool PassTwo::_generate_object_code() {
     }
     if(_opcode == "WORD"){
         opcode_value = strtol(_operand1.c_str(), NULL, 10);
-        int s_length = 1;
+        int s_length = 0;
         _obj_code = to_object_str(opcode_value, format, s_length);
         return true;
     }
